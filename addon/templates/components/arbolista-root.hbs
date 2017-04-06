@@ -1,0 +1,81 @@
+
+{{#if (and hasBlock (not yieldBelowTree))}}
+  {{yield (hash
+    nodeCount=nodeCount
+    toggleEditMode=(action "toggleEditMode")
+    clearCheckedNodes=(action "clearCheckedNodes")
+    closeAllNodes=(action "closeAllNodes")
+    createNode=(action "createNode")
+    deleteNode=(action "deleteNode")
+    modelName=modelName
+    editMode=editMode
+    currentNode=currentNode
+    currentNodeHasChildren=currentNodeHasChildren
+    currentNodeIsOpen=currentNodeIsOpen
+    aNodeIsSelected=aNodeIsSelected
+    allNodesAreClosed=allNodesAreClosed
+    isOpenNodes=isOpenNodes
+    isCheckedNodes=isCheckedNodes
+    )}}
+{{/if}}
+
+{{component treeControlsComponent
+  toggleEditMode=(action "toggleEditMode")
+  clearCheckedNodes=(action "clearCheckedNodes")
+  closeAllNodes=(action "closeAllNodes")
+  createNode=(action "createNode")
+  deleteNode=(action "deleteNode")
+  modelName=modelName
+  editMode=editMode
+  currentNode=currentNode
+  aNodeIsSelected=aNodeIsSelected
+  allNodesAreClosed=allNodesAreClosed
+  openCount=openCount
+  checkedCount=checkedCount
+  isOpenNodes=isOpenNodes
+  isCheckedNodes=isCheckedNodes
+  currentNodeHasChildren=currentNodeHasChildren
+  currentNodeIsOpen=currentNodeIsOpen
+}}
+
+{{arbolista-list
+
+  nestedTree=nestedTree
+  icon=icon
+  dragAndDrop=dragAndDrop
+
+  nodeComponent=(component 'tenzo-tree-node'
+                  icon=icon
+                  currentNode=currentNode
+                  editMode=editMode
+                  dragAndDrop=dragAndDrop
+                  nodeDropped=(action "nodeDropped")
+                  dragOverAction=(action "dragOverAction")
+                  dragOutAction=(action "dragOutAction")
+                  nodeDecoratorComponent=nodeDecoratorComponent
+                  inlineSave=(action "inlineSave")
+                  toggleChecked=(action "toggleChecked")
+                  toggleOpen=(action "toggleOpen")
+                  onNodeClick=(action "nodeClicked"))
+}}
+
+{{#if (and hasBlock yieldBelowTree )}}
+  {{yield (hash
+    nodeCount=nodeCount
+    dragAndDrop=dragAndDrop
+    toggleEditMode=(action "toggleEditMode")
+    clearCheckedNodes=(action "clearCheckedNodes")
+    closeAllNodes=(action "closeAllNodes")
+    createNode=(action "createNode")
+    deleteNode=(action "deleteNode")
+    modelName=modelName
+    editMode=editMode
+    currentNode=currentNode
+    currentNodeHasChildren=currentNodeHasChildren
+    currentNodeIsOpen=currentNodeIsOpen
+    aNodeIsSelected=aNodeIsSelected
+    allNodesAreClosed=allNodesAreClosed
+    isOpenNodes=isOpenNodes
+    isCheckedNodes=isCheckedNodes
+    )}}
+{{/if}}

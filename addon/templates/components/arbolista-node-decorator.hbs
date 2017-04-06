@@ -1,0 +1,11 @@
+
+{{#if treeNode.editMode}}
+  {{input type="checkbox" name="isChecked" checked=treeNode.isChecked click=(action treeNode.toggleChecked treeNode.node) }}
+{{/if}}
+
+{{fa-icon (if treeNode.isOpen 'caret-down' 'caret-right')
+      click=(action treeNode.toggleOpen treeNode.node)
+      class=(concat (if treeNode.hasChildren 'has-children ' 'childless ') 'expansion-icon') }}
+
+{{fa-icon treeNode.icon click=(action treeNode.clickAction treeNode.node) class="node-icon"}}
+{{ember-inline-edit value=treeNode.nodeName field='text' fieldWidth=600 onSave=(action treeNode.inlineSave treeNode.node) }}

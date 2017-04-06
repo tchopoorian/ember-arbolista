@@ -1,0 +1,24 @@
+{{yield (hash
+  node=node
+  nodeDropped=nodeDropped
+  dragOn=dragOn
+  dragAndDrop=dragAndDrop
+  dragOverAction=dragOverAction
+  dragOutAction=dragOutAction
+  dragOverNodeAction=(action "dragOverAction")
+  dragOutNodeAction=(action "dragOutAction")
+  nodeName=node.nodeName
+  children=node.children
+  modelName=node.modelName
+  currentDepth=currentDepth
+  icon=icon
+  isOpen=node.isOpen
+  hasChildren=node.hasChildren
+  editMode=editMode
+  isChecked=node.isChecked
+  inlineSave=inlineSave
+  toggleChecked=(action toggleChecked)
+  toggleOpen=(action toggleOpen)
+  clickAction=(action onNodeClick)
+  decoratorComponent=nodeDecoratorComponent)
+}}

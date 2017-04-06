@@ -1,0 +1,34 @@
+{{#each nestedTree as |node|}}
+
+  {{#component nodeComponent nodeComponent=nodeComponent rawNode=node as |treeNode|}}
+
+    {{#if (and treeNode.dragAndDrop treeNode.editMode)}}
+
+      {{#draggable-object-target  action=(action treeNode.nodeDropped treeNode.node)
+                                  class=(if treeNode.dragOn "drag-is-on")
+                                  dragOverAction=(action treeNode.dragOverAction treeNode.node treeNode.dragOverNodeAction)
+                                  dragOutAction=(action treeNode.dragOutAction treeNode.node treeNode.dragOutNodeAction) }}
+
+          {{#draggable-object tagName='span' content=treeNode.node}}
+
+              {{component treeNode.decoratorComponent treeNode=treeNode}}
+
+          {{/draggable-object}}
+
+      {{/draggable-object-target}}
+
+    {{else}}
+
+      {{component treeNode.decoratorComponent treeNode=treeNode}}
+
+    {{/if}}
+
+    {{#if treeNode.hasChildren}}
+      {{#if treeNode.isOpen}}
+        {{tenzo-tree-list nestedTree=treeNode.children nodeComponent=nodeComponent}}
+      {{/if}}
+    {{/if}}
+
+  {{/component}}
+
+{{/each}}
