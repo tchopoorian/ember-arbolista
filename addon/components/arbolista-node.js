@@ -5,9 +5,9 @@ const { computed, get, set } = Ember;
 
 export default Ember.Component.extend({
   layout,
-  
+
   tagName: 'li',
-  classNames: ['tree-node'],
+  classNames: ['arbolista-node'],
   classNameBindings: ['isCurrentNode:is-current-node'],
 
   node: computed('rawNode', 'rawNode.children.[]', function() {

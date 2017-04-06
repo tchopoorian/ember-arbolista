@@ -8,12 +8,14 @@ export default Ember.Component.extend({
 
   store: Ember.inject.service(),
 
-  classNames: ['tenzo-tree'],
+  classNames: ['arbolista'],
 
   yieldBelowTree: false,
   dragAndDrop: false,
 
   treeControlsComponent: 'arbolista-controls',
+  treeListComponent: 'arbolista-list',
+  treeNodeComponent: 'arbolista-node',
   nodeDecoratorComponent: 'arbolista-node-decorator',
 
   setupNodeClass: Ember.on('init', function() {

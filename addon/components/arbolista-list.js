@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   layout,
 
   tagName: 'ul',
-  classNames: ['tenzo-tree-list'],
+  classNames: ['arbolista-list'],
   classNameBindings: ['level'],
 
   currentDepth: 0,

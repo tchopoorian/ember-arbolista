@@ -38,13 +38,14 @@
   currentNodeIsOpen=currentNodeIsOpen
 }}
 
-{{arbolista-list
+{{component treeListComponent
 
   nestedTree=nestedTree
   icon=icon
   dragAndDrop=dragAndDrop
+  treeListComponent=treeListComponent
 
-  nodeComponent=(component 'tenzo-tree-node'
+  nodeComponent=(component treeNodeComponent
                   icon=icon
                   currentNode=currentNode
                   editMode=editMode
