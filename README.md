@@ -9,10 +9,15 @@ This README outlines the details of collaborating on this Ember addon.
 * `npm install`
 * `bower install`
 
-## Running
+## Assumptions
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+Model passed to the component has the following attributes:
+
+* name (required; overridable)
+* parentId (required)
+* children (optional; array of ids or model objects)
+
+
 
 ## Running Tests
 

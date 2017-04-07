@@ -9,7 +9,7 @@
   {{/if}}
 </button>
 {{#if editMode}}
-  <button class='tree-control edit-mode clear-checked' disabled={{if (eq isCheckedNodes.length 0) true}} {{action clearCheckedNodes}}>Clear Checked Nodes</button>
+  <button class='tree-control edit-mode clear-checked' disabled={{if (eq isCheckedNodes.length 0) true}} {{action clearCheckedNodes}}>Clear Checked</button>
 {{/if}}
 <button class='tree-control delete' disabled={{if (or (not aNodeIsSelected) currentNodeHasChildren) true}} {{action deleteNode}}>Delete</button>
-<button class='tree-control close-nodes' disabled={{if allNodesAreClosed true}} {{action closeAllNodes}}>Close All Nodes</button>
+<button class='tree-control close-nodes' disabled={{if allNodesAreClosed true}} {{action closeAllNodes}}>Close All</button>
