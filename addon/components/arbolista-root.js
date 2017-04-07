@@ -18,9 +18,9 @@ export default Ember.Component.extend({
   treeNodeComponent: 'arbolista-node',
   nodeDecoratorComponent: 'arbolista-node-decorator',
 
-  setupNodeClass: Ember.on('init', function() {
-    Node = Ember.Object.extend();
-  }),
+  // setupNodeClass: Ember.on('init', function() {
+  //
+  // }),
 
   rawRoots: computed('model', function(){
     return get(this, 'model').filterBy('parentId', null);
@@ -35,7 +35,6 @@ export default Ember.Component.extend({
   _makeLevel: function(list, _this) {
     let level = [];
     list.forEach(function(node) {
-      let root = (node.parentId === null ? true : false);
       let nodeObj = get(_this, '_makeNode')(node);
       nodeObj.set('children', get(_this, '_makeLevel')(node.get('children'), _this));
       level.pushObject(nodeObj);
@@ -45,6 +44,7 @@ export default Ember.Component.extend({
 
   _makeNode: function(node) {
     let hasChildren = node.get('children').get('length') > 0;
+    const Node = Ember.Object.extend();
     let nodeHash =  Node.create({
       id: node.get('id'),
       modelObject: node,
@@ -78,7 +78,7 @@ export default Ember.Component.extend({
       } else {
         return nodeMatch;
       }
-    };
+    }
 
     return recursiveFind(get(_this, 'nestedTree'), id);
   },
@@ -92,7 +92,7 @@ export default Ember.Component.extend({
         nodeCount += recursiveCount(node.get('children'));
       });
       return nodeCount;
-    };
+    }
 
     return recursiveCount(tree);
   },
@@ -150,17 +150,13 @@ export default Ember.Component.extend({
   actions: {
 
     nodeDropped(target, dropped) {
-      console.log("target: ", target);
-      console.log("dropped: ", dropped);
       if (target === dropped) {
-        console.log('do nothing');
+        // do nothing
       } else {
-        console.log('add dropped as child of target');
+        // add dropped node as child of target
         let oldParentId = dropped.get('parentId');
         let droppedIsRoot = !oldParentId ? true : false;
         if (!droppedIsRoot) {
-          console.log('The dropped node is NOT a root node!');
-          console.log("The dropped node's current parent is: ", oldParentId);
           // remove dropped from children of old parent
           // first, get the old parent node
           let oldParentNode = get(this, '_findNode')(get(this, 'nestedTree'), oldParentId, this);
@@ -170,13 +166,12 @@ export default Ember.Component.extend({
             oldParentNode.set('hasChildren', false);
           }
         } else {
-          console.log('The dropped node is a root node!');
+          // dropped node is a root
           // remove dropped node from roots
           get(this, 'nestedTree').removeObject(dropped);
         }
         // now set up new parent node
         let newParentId = target.get('id');
-        console.log("The dropped node's new parent will be: ", newParentId);
         // get the new parent node
         let newParentNode = get(this, '_findNode')(get(this, 'nestedTree'), newParentId, this);
         // set parentId on Node Object
@@ -215,7 +210,6 @@ export default Ember.Component.extend({
     },
 
     deleteNode() {
-      var modelName = get(this, 'modelName');
       let node = get(this, 'currentNode');
       let nodeParentId = node.get('parentId');
       if (node != null) {
@@ -229,7 +223,6 @@ export default Ember.Component.extend({
             // remove the child from the parent (always sad but sometimes necessary)
             let children = parentNode.get('children');
             children.removeObject(node);
-            console.log('parent after child removed: ', parentNode);
             // figure out if the parent of deleted node needs to be closed
             // I.e., only close the parent if the deleted node was its only child
             let emptyNest = children.get('length') == 0;
@@ -260,16 +253,17 @@ export default Ember.Component.extend({
 
     createNode() {
       var modelName = get(this, 'modelName');
+      var parentNode, parentId
       if (this.get('currentNode') != null) {
         // new node is a child
-        var parentNode = this.get('currentNode');
-        var parentId = parentNode.get('id');
+        parentNode = this.get('currentNode');
+        parentId = parentNode.get('id');
       } else {
         // new node is a root
-        var parentNode = null;
+        parentNode = null;
         // if a node is not currently selected, ask user if she wants to create a root node
         if (confirm('Create root node?')) {
-          var parentId = "#";
+          parentId = "#";
         } else {
           return;
         }
@@ -286,14 +280,14 @@ export default Ember.Component.extend({
         newModelObject.set(this.get('treeParentModelName'), treeParent);
       }
       newModelObject.save().then((newObj) => {
+        var newNode;
         if (newObj.get('parentId') == null) {
           // if new node is a root, add it to the list of roots
-          var newNode = get(this, '_makeNode')(newObj);
+          newNode = get(this, '_makeNode')(newObj);
           this.get('nestedTree').pushObject(newNode);
-          console.log("new root node: ", newNode);
         } else {
           // if new node is not a root, add it to the list of children of its parent
-          var newNode = get(this, '_makeNode')(newObj);
+          newNode = get(this, '_makeNode')(newObj);
           let children = parentNode.get('children');
           parentNode.set('hasChildren', true);
             if (children.get('length') > 0 ) {
@@ -363,7 +357,6 @@ export default Ember.Component.extend({
         get(this, '_recursiveToggle')(this, node.get('children'), 'isOpen', false, true);
       }
       node.set('isOpen', !open);
-      console.log(node.isOpen);
       // after the toggle, if it's now open
       if (node.isOpen) {
         this.get('isOpenNodes').pushObject(node);

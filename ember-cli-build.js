@@ -2,8 +2,14 @@
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
+  var bourbon = require('bourbon').includePaths;
+  var neat = require('bourbon-neat').includePaths;
+  var sassPaths = bourbon.concat(neat);
   var app = new EmberAddon(defaults, {
     // Add options here
+    sassOptions: {
+      includePaths: sassPaths
+    }
   });
 
   /*

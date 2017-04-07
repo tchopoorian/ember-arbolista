@@ -17,6 +17,8 @@ Model passed to the component has the following attributes:
 * parentId (required)
 * children (optional; array of ids or model objects)
 
+Root nodes have parentId set to null.
+
 
 
 ## Running Tests
