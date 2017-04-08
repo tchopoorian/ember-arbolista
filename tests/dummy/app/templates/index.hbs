@@ -3,5 +3,10 @@
   <h1>Hello Dummy</h1>
 </div>
 
+{{model}}
 
-{{arbolista-root }}
+{{#each model as |item|}}
+
+  {{item.inspect}}
+
+{{/each}}
