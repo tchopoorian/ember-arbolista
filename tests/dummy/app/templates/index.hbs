@@ -3,10 +3,13 @@
   <h1>Hello Dummy</h1>
 </div>
 
-{{model}}
+
 
 {{#each model as |item|}}
 
-  {{item.inspect}}
+  {{item.name}}<br>
 
+  {{#each item.children as |child|}}
+    {{child.name}}<br>
+  {{/each}}
 {{/each}}
