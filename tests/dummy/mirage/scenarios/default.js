@@ -1,3 +1,11 @@
+import Ember from 'ember';
+
 export default function(server) {
-  server.create('collection', 'withChildren');
+
+  var roots = server.createList('collection', 10);
+
+  roots.forEach(function(parent){
+    server.createList('collection', 3, { parent });
+  });
+
 }

@@ -3,13 +3,6 @@
   <h1>Hello Dummy</h1>
 </div>
 
-
-
-{{#each model as |item|}}
-
-  {{item.name}}<br>
-
-  {{#each item.children as |child|}}
-    {{child.name}}<br>
-  {{/each}}
-{{/each}}
+<div class="collection-tree">
+  {{arbolista-root model=model icon="folder"}}
+</div>

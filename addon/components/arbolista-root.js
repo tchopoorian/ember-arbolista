@@ -10,6 +10,8 @@ export default Ember.Component.extend({
 
   classNames: ['arbolista'],
 
+  // defaults
+  icon: 'folder',
   yieldBelowTree: false,
   dragAndDrop: false,
 
@@ -18,12 +20,18 @@ export default Ember.Component.extend({
   treeNodeComponent: 'arbolista-node',
   nodeDecoratorComponent: 'arbolista-node-decorator',
 
-  // setupNodeClass: Ember.on('init', function() {
-  //
-  // }),
-
   rawRoots: computed('model', function(){
-    return get(this, 'model').filterBy('parentId', null);
+    console.log('model: ', get(this, 'model'));
+    get(this, 'model').forEach(function(node){
+      console.log('node: ', node);
+      console.log('children: ', node.get('children'));
+      console.log('parent: ', node.get('parent').get('id'));
+    })
+    let roots = get(this, 'model').filter(function(node){
+      return node.get('parent').get('id') == null;
+    })
+    console.log('roots: ', roots);
+    return roots;
   }),
 
   nestedTree: computed('rawRoots', 'rawRoots.[]', function() {
@@ -33,7 +41,7 @@ export default Ember.Component.extend({
   }),
 
   _makeLevel: function(list, _this) {
-    let level = [];
+    var level = Ember.A([]);
     list.forEach(function(node) {
       let nodeObj = get(_this, '_makeNode')(node);
       nodeObj.set('children', get(_this, '_makeLevel')(node.get('children'), _this));
@@ -57,7 +65,7 @@ export default Ember.Component.extend({
       isSelected: false,
       isDisabled: false,
       hasChildren: hasChildren,
-      children: [],
+      children: Ember.A([]),
       root: node.get('parentId') === null
     });
     return nodeHash;
@@ -97,9 +105,8 @@ export default Ember.Component.extend({
     return recursiveCount(tree);
   },
 
-  modelName: computed('list', function() {
-    let firstNode = get(this, 'rawRoots').get('firstObject');
-    return firstNode.constructor.modelName;
+  modelName: computed('model', function() {
+    return get(this, 'model').modelName;
   }),
 
   treeParentObject: null,
@@ -111,11 +118,11 @@ export default Ember.Component.extend({
 
   editMode: false,
 
-  isCheckedNodes: [],
-  isOpenNodes: [],
+  isCheckedNodes: Ember.A([]),
+  isOpenNodes: Ember.A([]),
 
   allNodesAreClosed: computed('isOpenNodes.[]', function() {
-    return (get(this, 'isOpenNodes').get('length') == 0);
+    return (get(this, 'isOpenNodes').length == 0);
   }),
 
   currentNode: null,

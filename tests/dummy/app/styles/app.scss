@@ -1,4 +1,4 @@
-
+@import "normalize";
 // Bourbon + Neat + Bitters
 @import "bourbon";
 @import "neat";
@@ -10,4 +10,152 @@ body {
 
 h1 {
   text-align: center;
+}
+
+ul, li {
+  list-style: none;
+  padding: 0;
+}
+
+
+$light-green: #E6EFC2;
+$green: #1AAD8C;
+
+// from: http://clrs.cc/
+/* Backgrounds */
+$bg-navy: #001F3F;
+$bg-blue: #0074D9;
+$bg-aqua: #7FDBFF;
+$bg-teal: #39CCCC;
+$bg-olive: #3D9970;
+$bg-green: #2ECC40;
+$bg-lime: #01FF70;
+$bg-yellow: #FFDC00;
+$bg-orange: #FF851B;
+$bg-red: #FF4136;
+$bg-fuchsia: #F012BE;
+$bg-purple: #B10DC9;
+$bg-maroon: #85144B;
+$bg-white: #FFFFFF;
+$bg-gray: #AAAAAA;
+$bg-silver: #DDDDDD;
+$bg-black: #111111;
+
+
+$arbolista-scale-base: 12px;
+
+.collection-tree {
+  @include grid-column(12);
+  // .arbolista, .arbolista-controls, .arbolista-list, .arbolista-node {
+  //
+  // }
+}
+
+.collections-header {height: 100px;}
+.collection-tree {height: 650px;}
+
+.collection-tree {
+  max-height: 100%;
+  .collection-tree-scroll {
+    // text-align: left;
+    height: 550px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    padding: 20px 0px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+}
+
+.collection-tree {
+  .arbolista {
+    .node-icon, .expansion-icon {
+      .media-jumbo &    {font-size: modular-scale(3, $arbolista-scale-base, $perfect-fourth);}
+      .media-desktop &  {font-size: modular-scale(2, $arbolista-scale-base, $perfect-fourth);}
+      .media-tablet &   {font-size: modular-scale(1, $arbolista-scale-base, $perfect-fourth);}
+      .media-mobile &   {font-size: modular-scale(0, $arbolista-scale-base, $perfect-fourth);}
+    }
+  }
+}
+
+
+.collection-tree {
+  .arbolista-list, .arbolista-controls {
+    margin-left: 20px;
+  }
+  .arbolista-node {
+    padding: 5px;
+  }
+  .expansion-icon.childless {
+    visibility: hidden;
+  }
+  .expansion-icon {
+    cursor: pointer;
+    // font-size: 2em;
+  }
+  .node-icon {
+    cursor: pointer;
+    // font-size: 2em;
+  }
+  .arbolista-node.is-checked > div span > .node-icon, .arbolista-node.is-checked > .node-icon {
+    color: red;
+  }
+  .arbolista-node.is-current-node > div span > .node-icon, .arbolista-node.is-current-node > .node-icon {
+    color: $bg-green;
+  }
+  .arbolista-node.is-current-node {
+    background-color: $light-green;
+  }
+  .draggable-object-target.drag-is-on {
+    background-color: $light-green;
+    border: 1px $green dashed;
+  }
+  .draggable-object-target {
+    padding: 0.50em;
+  }
+  span.draggable-object {
+    display: inline-block;
+  }
+}
+
+
+.collection-tree {
+  .arbolista-controls {
+    margin-bottom: 20px;
+    button.tree-control {
+      padding: 0.3em 0.5em;
+      font-size: 0.8em;
+      &:focus {
+        outline: none;
+      }
+    }
+    button.edit-mode {
+      background-color: $bg-orange;
+      color: $bg-navy;
+    }
+    button.create {
+      background-color: $bg-green;
+      color: $bg-navy;
+    }
+    button.delete {
+      background-color: $bg-red;
+      color: $bg-navy;
+    }
+  }
+
+  .arbolista {
+    div.ember-inline-edit {
+      display: inline-block;
+      cursor: pointer;
+      margin-left: 10px;
+      .ember-inline-edit-input {
+        display: inline-block;
+        width: 300px !important;
+      }
+      .ember-inline-edit-save {
+        line-height: 0.5;
+        padding: 0.5em 0.75em;
+      }
+    }
+  }
 }
