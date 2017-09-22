@@ -20,6 +20,11 @@ export default Ember.Component.extend({
   treeNodeComponent: 'arbolista-node',
   nodeDecoratorComponent: 'arbolista-node-decorator',
 
+  // api
+
+  onCreateNode: null,
+
+
   rawRoots: computed('model', function(){
     console.log('model: ', get(this, 'model'));
     get(this, 'model').forEach(function(node){
@@ -30,13 +35,14 @@ export default Ember.Component.extend({
     let roots = get(this, 'model').filter(function(node){
       return node.get('parent').get('id') == null;
     })
-    console.log('roots: ', roots);
+    // console.log('roots: ', roots);
     return roots;
   }),
 
   nestedTree: computed('rawRoots', 'rawRoots.[]', function() {
     let roots = get(this, 'rawRoots');
     let tree = get(this, '_makeLevel')(roots, this);
+    console.log('tree: ', tree);
     return tree;
   }),
 
@@ -260,7 +266,7 @@ export default Ember.Component.extend({
 
     createNode() {
       var modelName = get(this, 'modelName');
-      var parentNode, parentId
+      var parentNode, parentId;
       if (this.get('currentNode') != null) {
         // new node is a child
         parentNode = this.get('currentNode');
@@ -278,8 +284,10 @@ export default Ember.Component.extend({
       // create
       var newModelObject = this.get('store').createRecord(modelName, {
         name: 'New Node',
-        parentId: parentId
+        parent: null
+        // parentId: parentId
       });
+      console.log('new model obj: ', newModelObject);
       // this is not the node parent but an optional object that owns the tree
       var treeParent = this.get('treeParentObject');
       if (treeParent != null) {
@@ -288,7 +296,10 @@ export default Ember.Component.extend({
       }
       newModelObject.save().then((newObj) => {
         var newNode;
-        if (newObj.get('parentId') == null) {
+        console.log('parent of new: ', newObj.get('parent'));
+        console.log('parent null? ', newObj.get('parent') == null);
+        console.log('new obj: ', newObj);
+        if (newObj.get('parent') == null) {
           // if new node is a root, add it to the list of roots
           newNode = get(this, '_makeNode')(newObj);
           this.get('nestedTree').pushObject(newNode);
@@ -313,7 +324,8 @@ export default Ember.Component.extend({
           }
         }
         // this.incrementProperty('nodeCount');
-        if (get(this, 'onCreateNode')) {
+        if (get(this, 'onCreateNode') != null) {
+          console.log('here....');
           get(this, 'onCreateNode')(newNode, get(this, 'nodeCount'));
         }
       });

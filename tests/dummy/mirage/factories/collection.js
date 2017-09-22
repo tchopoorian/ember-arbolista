@@ -9,13 +9,6 @@ export default Factory.extend({
     return faker.name.findName();
   },
   parent: null,
-  parentId: null,
+  // parentId: null,
   children: null
-  // withChildren: trait({
-  //   afterCreate(parent, server) {
-  //     server.create('collection', { parent, name: 'first child', parent_id: parent.id });
-  //     server.create('collection', { parent, name: 'second child' });
-  //     server.create('collection', { parent, name: 'third child' });
-  //   }
-  // })
 });
